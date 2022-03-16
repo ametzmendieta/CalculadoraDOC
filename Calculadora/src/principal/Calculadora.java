@@ -4,6 +4,12 @@ import operaciones.Operaciones;
 
 public class Calculadora{
     public static void main(String[] args) {   
+    	
+    	/**
+    	 * Declara un array int de dos posiciones. Llama a dos metodos. El primero devuelve dos numeros, el segundo metodo devuelve un signo de suma, resta etc..
+    	 * Dependiendo el signo que introduce, mediante varios ifs escogerá el calculo que debe hacer el programa con dichos numeros, devolviendo finalmente el resultado.
+    	 */
+    	
         int resultado = 0;
         String operacion = "";
         int[] operandos = new int [2];
