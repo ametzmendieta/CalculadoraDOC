@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import logs.FormatoHTML;
 import menu.Menu;
 import operaciones.Operaciones;
 
@@ -18,6 +19,7 @@ public class Calculadora{
     	 * Declara un array int de dos posiciones. Llama a dos metodos. El primero devuelve dos numeros, el segundo metodo devuelve un signo de suma, resta etc..
     	 * Dependiendo el signo que introduce, mediante varios ifs escogerá el calculo que debe hacer el programa con dichos numeros, devolviendo finalmente el resultado.
     	 */
+    	configurarLog();
     	
         int resultado = 0;
         String operacion = "";
@@ -26,22 +28,7 @@ public class Calculadora{
         Menu menu = new Menu();
         Operaciones operaciones = new Operaciones();
         
-        Handler fileHandler = null;
-        Handler consoleHandler = new ConsoleHandler();
-        try {
-          fileHandler = new FileHandler("./operaciones.log");
-        } catch(IOException exception){
-            LOGGER.log(Level.SEVERE, "Ocurrio un error en FileHandler.", exception);
-        }
-        LogManager.getLogManager().reset();    
-        
-        LOGGER.addHandler(consoleHandler);
-        LOGGER.addHandler(fileHandler);
-        
-        
-        consoleHandler.setLevel(Level.WARNING);
-        fileHandler.setLevel(Level.FINE);
-        LOGGER.setLevel(Level.FINE);
+       
         
         do{
             operandos = menu.pedirNumeros();
@@ -73,5 +60,33 @@ public class Calculadora{
             	LOGGER.log(Level.WARNING, "Division entre cero");
             }
         }   while (menu.repetir());
+    }
+    
+    public static void configurarLog() {
+    	
+    	LOGGER.setUseParentHandlers(false);
+    	
+    	 Handler fileHandler = null;
+         Handler consoleHandler = new ConsoleHandler();
+         
+         LOGGER.addHandler(consoleHandler);
+         
+         try {
+           fileHandler = new FileHandler("./logOperaciones.html");
+         } catch(IOException exception){
+             LOGGER.log(Level.SEVERE, "Ocurrio un error en FileHandler.", exception);
+         }
+         
+         fileHandler.setFormatter(new FormatoHTML());
+    
+         
+         
+         LOGGER.addHandler(fileHandler);
+         
+         
+         consoleHandler.setLevel(Level.WARNING);
+         fileHandler.setLevel(Level.FINE);
+         
+         LOGGER.setLevel(Level.FINE);
     }
 }
